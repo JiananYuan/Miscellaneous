@@ -1,0 +1,192 @@
+% 导言区
+\documentclass{article}
+
+\usepackage{ctex}
+% equation* 与 矩阵所需的宏包
+\usepackage{amsmath}
+
+% 正文区
+\begin{document}
+\tableofcontents
+% 常用符号
+% 行间公式：$$
+% 带编号的行间公式：equation环境
+% 不带编号的行间公式：\[ \]
+
+
+\section{简介}
+    \LaTeX 分为两种模式，文本模式与数学公式
+    
+\section{行内公式}
+\subsection{美元符号} 
+交换律是 $a+b=b+a$ 如 $1+2=2+1$
+\subsection{小括号}
+交换律是 \(a+b=b+a\) 如 \(1+2=2+1\)
+\subsection{math环境}
+交换律是
+\begin{math}
+     a+b=b+a
+\end{math}
+如
+\begin{math}
+    1+2=2+1.
+\end{math}
+
+\section{上下标}
+\subsection{上标}
+$3x^2-x+2$
+
+$3x^{x+1}-x+2$
+\subsection{下标}
+$x_1+x_2=4$
+
+$x_{x+1}+x_2=4$
+
+\section{希腊字母}
+$\alpha \beta \gamma \delta \epsilon $
+
+\section{数学函数}
+$\log$
+$\sin$
+$\cos$
+$\arcsin$
+$\arccos$
+$\arctan$
+$\ln$
+
+$\sin^2x + \cos^2x = 1$
+
+$\sqrt[2]{2x+3}$
+
+$\sqrt[3]{2x-5}$
+
+\section{分式}
+\subsection{/}
+$3/4 $
+
+\subsection{\textbackslash frac\{\}\{\}}
+$\frac{8}{5}$
+
+
+\section{行间公式}
+\subsection{双美元符号}
+交换律是$$a+b=b+a $$
+如$$1+2=2+1$$
+\subsection{中括号}
+交换律是
+\[a+b=b+a\]
+如\[1+2=2+1\]
+
+\subsection{displaymath环境}
+交换律是
+\begin{displaymath}
+    a+b=b+a\label{eq:no2}
+\end{displaymath}
+如
+\begin{displaymath}
+    1+2=2+1
+\end{displaymath}
+
+\subsection{自动编号}
+交换律见式\ref{eq:no1}
+\begin{equation}
+    a+b=b+a \label{eq:no1}
+\end{equation}
+如见公式\ref{eq:no2}
+\begin{equation}
+    1+2=2+1
+\end{equation}
+
+\subsection{不自动编号}
+交换律见式
+\begin{equation*}
+a+b=b+a \label{eq:no3}
+\end{equation*}
+如见公式 \ref{eq:no3}
+\begin{equation*}
+1+2=2+1
+\end{equation*}
+
+\section{矩阵的排版}
+\subsection{矩阵的括号}
+%无括号
+\[
+\begin{matrix}
+0 & 1 \\
+1 & 0 
+\end{matrix}
+\]
+
+%小括号
+\[
+\begin{pmatrix}
+0 & 1 \\
+1 & 0 
+\end{pmatrix}
+\]
+
+%中括号
+\[
+\begin{bmatrix}
+0 & 1 \\
+1 & 0 
+\end{bmatrix}
+\]
+
+%大括号
+\[
+\begin{Bmatrix}
+0 & 1 \\
+1 & 0 
+\end{Bmatrix}
+\]
+
+% 单竖线
+\[
+\begin{vmatrix}
+0 & 1 \\
+1 & 0 
+\end{vmatrix}
+\]
+
+%双竖线
+\[
+\begin{Vmatrix}
+0 & 1 \\
+1 & 0 
+\end{Vmatrix}
+\]
+
+\subsection{矩阵的省略号}
+%\dots 横向省略号
+%\vdots 竖向省略号
+%\ddots 斜向省略号
+\[
+A = \begin{bmatrix}
+a_{11} & \dots & a_{1n}\\
+\vdots& \ddots & \vdots \\
+0 & \dots & a_{nn}
+\end{bmatrix}_{n \times n}
+\]
+
+\subsection{行内小矩阵}
+复数可用矩阵
+\begin{math}
+    \left(
+    \begin{smallmatrix}
+    x & y \\ -y & x
+    \end{smallmatrix}
+    \right)
+\end{math}
+来表示
+
+\subsection{array环境}
+\[
+\begin{array}{c|c}
+1 & 2\\
+\hline
+0　& 1
+\end{array}
+\]
+
+\end{document}
