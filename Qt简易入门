@@ -1,0 +1,156 @@
+// Qt入门：
+// 1. 打开菜单，新建文件或项目->其他项目->空的Qt项目，项目名设为helloqt，项目名和目录不能为中文。
+// 2. 双击“helloqt.pro”，加入代码：
+//       SOURCES += \
+//           main.cpp
+//       QT += core gui widgets
+// 3. 新建c++源文件，取名mian.cpp，加入代码
+
+#include <QApplication>
+#include <QLabel>
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc,argv);
+    QLabel *label = new QLabel("<h2><i>Hello</i> ""<font color = red>Qt!</h2>");
+    label->show();
+    return app.exec();
+}
+
+
+
+//finddialog.h
+
+#ifndef FINDDIALOG_H
+#define FINDDIALOG_H
+#include <QDialog>
+class QCheckBox;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+class FindDialog:public QDialog {
+    Q_OBJECT
+public:
+    FindDialog(QWidget *parent = 0);
+signals:
+    void findNext(const QString& str,Qt::CaseSensitivity cs);
+    void findPrevious(const QString& str,Qt::CaseSensitivity cs);
+private slots:
+    void findClicked();
+    void enableFindButton(const QString& text);
+private:
+    QLabel *label;
+    QLineEdit *lineEdit;
+    QCheckBox *caseCheckBox;
+    QCheckBox *backwardCheckBox;
+    QPushButton *findButton;
+    QPushButton *closeButton;
+};
+
+#endif // FINDDIALOG_H
+
+//**********************************************************
+//finddialog.cpp
+#include <QtWidgets>
+#include "finddialog.h"
+FindDialog::FindDialog(QWidget* parent) : QDialog(parent) {
+    label = new QLabel(tr("find &what:"));
+    lineEdit = new QLineEdit;
+    label ->setBuddy(lineEdit);
+    caseCheckBox = new QCheckBox(tr("Match& case"));
+    backwardCheckBox = new QCheckBox(tr("Search& backward"));
+
+    findButton = new QPushButton(tr("&Find"));
+    findButton ->setDefault(true);
+    findButton ->setEnabled(false);
+    closeButton = new QPushButton(tr("Close"));
+    connect(lineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(enableFindButton(const QString&)));
+    connect(findButton,SIGNAL(clicked()),this,SLOT(findClicked()));
+    connect(closeButton,SIGNAL(clicked()),this,SLOT(close()));
+    QHBoxLayout *topLeftLayout = new QHBoxLayout;
+    topLeftLayout ->addWidget(label);
+    topLeftLayout ->addWidget(lineEdit);
+    QVBoxLayout *leftLayout = new QVBoxLayout;
+    leftLayout ->addLayout(topLeftLayout);
+    leftLayout ->addWidget(caseCheckBox);
+    leftLayout ->addWidget(backwardCheckBox);
+
+    QVBoxLayout *rightLayout = new QVBoxLayout;
+    rightLayout ->addWidget(findButton);
+    rightLayout ->addWidget(closeButton);
+    rightLayout ->addStretch();
+
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout ->addLayout(leftLayout);
+    mainLayout ->addLayout(rightLayout);
+    setLayout(mainLayout);
+    setWindowTitle(tr("find"));
+    setFixedHeight(sizeHint().height());
+}
+
+void FindDialog::findClicked() {
+    QString text = lineEdit->text();
+    Qt::CaseSensitivity cs = caseCheckBox->isChecked() ? Qt::CaseSensitive:Qt::CaseInsensitive;
+    if(backwardCheckBox->isChecked()) {
+        emit findPrevious(text,cs);
+    } else {
+        emit findNext(text,cs);
+    }
+}
+
+void FindDialog::enableFindButton(const QString& text) {
+    findButton->setEnabled(!text.isEmpty());
+}
+
+//***************************************************************8
+//main.cpp
+#include <QApplication>
+#include <finddialog.h>
+
+int main(int argc,char* args[]) {
+    QApplication app(argc,args);
+    FindDialog *dialog = new FindDialog;
+    dialog->show();
+    return app.exec();
+}
+
+
+
+#include <QApplication>
+#include <QPushButton>
+
+int main(int argc,char* argv[]) {
+    QApplication app(argc,argv);
+    QPushButton *button = new QPushButton("Quit");
+    QObject::connect(button,SIGNAL(clicked()),&app,SLOT(quit()));
+    button->show();
+    return app.exec();
+}
+
+
+
+//最常使用的方式是先声明所需的窗口部件，再设置它们所应具备的属性，再将这些部件添加到布局中
+
+#include <QApplication>
+#include <QHBoxLayout>
+#include <QSlider>
+#include <QSpinBox>
+
+int main(int argc,char* argv[]) {
+    QApplication app(argc,argv);
+    QWidget *win = new QWidget;
+    win ->setWindowTitle("enter your age");
+    QSpinBox *spin = new QSpinBox;
+    QSlider *slid = new QSlider(Qt::Vertical);
+    spin -> setRange(0,130);
+    slid -> setRange(0,130);
+    QObject::connect(spin,SIGNAL(valueChanged(int)),slid,SLOT(setValue(int)));
+    QObject::connect(slid,SIGNAL(valueChanged(int)),spin,SLOT(setValue(int)));
+    spin -> setValue(35);
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(spin);
+    layout->addWidget(slid);
+    win ->setLayout(layout);
+    win->show();
+    return app.exec();
+}
