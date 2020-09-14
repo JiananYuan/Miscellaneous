@@ -1,0 +1,30 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{amsmath}
+\author{姓名：袁佳楠 \quad 学号：2018151102}
+\title{\textbf{Summary of BB84 Protocal}}
+\date{}
+\begin{document}
+\maketitle
+(注：本篇是第一次使用Latex排版，不美观之处，敬请谅解)
+\newpage
+QKD(Quantum key distribution) is a provably safety protocal, by which private key bits can be created to implement a classical private key cryptosystem and enable safety communication under a certain threshold. The security of the resulting key is guaranteed by no-cloning theorem and the proposition that information gain implies disturbance. There are three different QKD protocals - the BB84 protocal, the B92 protocal and the EPR protocal. The summary of BB84 protocal is as follows.
+\par
+1. Alice chooses two strings, \textbf{a} and \textbf{b}, each of (4+$\delta$)n random data bits and encodes these strings as a block of (4+$\delta$)n qubits. Each qubit is one of the four states:
+$$|\psi_{00} \rangle = |0 \rangle \eqno{(1)}$$
+$$|\psi_{10} \rangle = |1 \rangle \eqno{(2)}$$
+$$|\psi_{01} \rangle = (|0 \rangle + |1\rangle) / \sqrt{2}\eqno{(3)}$$
+$$|\psi_{11} \rangle = (|0 \rangle - |1\rangle) / \sqrt{2}\eqno{(4)}$$
+No measurement can distinguish between the above four states with certainty.
+\par
+2. Alice sends |$\psi\rangle$ to Bob over public quantum communication channel.
+\par
+3. Bob receives qubits sent from Alice and publicly announces this fact. Since he doesn't know anything about \textbf{b}, he measures each qubit in the \textbf{X} or \textbf{Z} basis at random.
+\par
+4. Alice announces \textbf{b} by discussion over a public channel and Bob discards wrong-measured qubits. With high probability, there are at least \textbf{2n} bits left and they keep these bits.
+\par
+5. Alice and Bob perform some tests to determine whether Eve is on interference. Alice randomly selects \textbf{n} bits and publicly announces the selection. Then they publish and compare the values. Once more than a discussed threshold, they abort and re-try the protocal from the start.
+\par
+6. If the test passes, they apply information reconciliation and privacy amplification algorithms to obtain \textbf{m} acceptably secret shared key bits from the remaining \textbf{n} bits.
+
+
+\end{document}
